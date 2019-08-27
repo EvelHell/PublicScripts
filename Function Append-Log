@@ -1,0 +1,30 @@
+ Function Append-Log {
+
+	<#
+	.SYNOPSIS
+	Appends text to a log file.
+	.DESCRIPTION
+	Appends text to a log file. 
+	Each text entry in the log is preceded by a timestamp and a resultcode
+	The timestamp is formatted as follows: "yyyy-MM-dd HH:mm:ss"
+	The resultcode can be any textcode, examples are "INFO", "SUCCESS", "ERROR"
+	.PARAMETER Text
+	Specifies the text to be written in the log.
+	.PARAMETER PathToLogFile
+	Specifies the path to the log file.
+	.PARAMETER Result
+	Specifies the result code to be written in the log. 
+	If the result code is omitted, the default result code "INFO" will be provided.
+	.INPUTS
+	None, no objects can be passed to this function
+	.OUTPUTS
+	None, no objects are returned by this function.
+	#>
+
+  param(
+		[Parameter(Mandatory=$True)][string]$Text,
+		[Parameter(Mandatory=$True)][string]$PathToLogFile,
+		[Parameter(Mandatory=$False)][string]$Result = "INFO"
+	)
+	$(([datetime]::now).tostring("yyyy-MM-dd HH:mm:ss")) + " : " + $Result + " : " + $Text | Out-File $PathToLogFile -Append
+}
