@@ -60,6 +60,7 @@ $network = "VLANz"
 write-host "provide information to create a new vm" -ForegroundColor Yellow
 $vmname = read-host "enter the vm's name"
 
+
 #test vmname in vCenter
 Write-Host "checking if the name is known in vCenter" -ForegroundColor Yellow 
 $testname = Get-VM $vmname
@@ -85,7 +86,6 @@ for ($i=1;$i -le $vChosts.count; $i++) {
 $targetvmhost = $hostmenu.Item($hostans)
 Get-vmhost $targetvmhost
 
-
 write-host "looking up connected datastores on $targetvmhost" -ForegroundColor Yellow
 write-host "provide the datastore for the vm" -ForegroundColor Yellow
 Get-vmhost $targetvmhost | get-datastore | select name, capacityGB, freespaceGB | ft
@@ -97,7 +97,7 @@ for ($i=1;$i -le $datastore.count; $i++) {
     $dsmenu.Add($i,($datastore[$i-1].name))
     }
 [int]$dsans = Read-Host 'Enter the number of the datastore you want to use.'
-$targetds = $dsmenu.Item($dsans)
+
 
 #get vm specs
 write-host "The default template for the vm is $vmTemplate. Provide the basic specs for the machine" -ForegroundColor Yellow
@@ -134,8 +134,8 @@ switch -Regex ( $choice ) {
         }
 }
 
-
 New-VM -Name $vmname -Template $vmTemplate -vmhost $TargetVMHost -Datastore $datastore 
+
 
 #applying settings
 write-host "vm $vmname is created. Applying settings... " -ForegroundColor Yellow
