@@ -97,6 +97,7 @@ for ($i=1;$i -le $datastore.count; $i++) {
     $dsmenu.Add($i,($datastore[$i-1].name))
     }
 [int]$dsans = Read-Host 'Enter the number of the datastore you want to use.'
+$targetds = $dsmenu.Item($dsans)
 
 
 #get vm specs
@@ -115,7 +116,7 @@ write-host "creating a vm with these specs:
 - network (default): $network
 - template (default): $vmTemplate
 
-vm will be created on $TargetVMHost and stored on $datastore
+vm will be created on $TargetVMHost and stored on $targetds
 
 " -ForegroundColor Yellow
 
